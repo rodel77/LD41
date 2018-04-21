@@ -1,28 +1,27 @@
 math.randomseed(love.timer.getTime());
 
+-- Libs
 inspect = require "libs/inspect";
+lovebpm = require "libs/lovebpm";
+tween = require "libs/tween";
 
 require "src/data";
 require "src/utils";
 require "src/scenes/scenes";
 
--- Libs
-lovebpm = require "libs/lovebpm";
-tween = require "libs/tween";
-
-currentScene = nil;
-
+currentScene = SplashScene;
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest");
 
     gfx = {
-        phone = loadImage("assets/gfx/phone.png")
+        splash = loadImage("assets/gfx/splash.png")
     }
     
     fonts = {
-        slapface = love.graphics.newFont("assets/fonts/ChevyRay - Slapface.ttf", 13);
-        oeuf = love.graphics.newFont("assets/fonts/ChevyRay - Oeuf.ttf", 13);
+        slapface = love.graphics.newFont("assets/fonts/ChevyRay - Slapface.ttf", 13),
+        oeuf = love.graphics.newFont("assets/fonts/ChevyRay - Oeuf.ttf", 13),
+        bubble = love.graphics.newFont("assets/fonts/ChevyRay - Bubble Time.ttf", 20);
     }
     
     love.graphics.setFont(fonts.slapface);
@@ -41,7 +40,7 @@ function love.load()
     sfx.battleTheme:setBPM(100);
     sfx.battleTheme:setLooping(true);
 
-    newRandomCall()
+    -- newRandomCall()
 
     -- currentScene:startCall();
 end
@@ -68,8 +67,6 @@ function love.keypressed(key)
     else
         if currentScene then
             currentScene.keypressed(key);
-        else
-
         end
     end
 end

@@ -57,6 +57,8 @@ end
 local textWrapping = 300;
 
 GameScene = {
+    load = function(this)
+    end,
     playSong = function(this)
         
         song.listeners["beat"] = {this.beat};
