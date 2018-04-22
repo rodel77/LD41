@@ -17,6 +17,7 @@ local waitingCall = true;
 local consequence = "";
 local localRating = 0;
 local problemsSolved = {};
+local globalSolved = {}; -- Make every call different so players will enjoy more the game exploring all the problems
 
 function newRandomCall()
     problemsSolved = {};
@@ -49,12 +50,16 @@ function randProblem()
         return nil;
     end
 
+    if #globalSolved==#problems then
+        globalSolved = {}; -- Clear the list
+    end
+
     local valid = true;
     local id = math.random(#problems);
     local problem = problems[id];
 
     for i,solved in ipairs(problemsSolved) do
-        print("Iterating", i, id);
+        print("Iterating", solved, id);
         if solved==id then
             valid = false;
             print("Finding a repeated problem... go again!")
@@ -62,10 +67,19 @@ function randProblem()
         end
     end
 
+    for i,gSolved in ipairs(globalSolved) do
+        print("Iterating(g)", gSolved, id);
+        if gSolved==id  then
+            valid = false;
+            print("Finding a repeated problem (globally)... go again!")
+        end
+    end
+
     if not valid then
         return randProblem();
     else
         table.insert(problemsSolved, id);
+        table.insert(globalSolved, id);
         print("Problem", id)
         return problem;
     end
@@ -206,6 +220,7 @@ GameScene = {
             time = 0;
             if #currentText>#bufferText then
                 bufferText = bufferText..string.sub(currentText, #bufferText+1, #bufferText+1);
+                sfx.pip:play();
             end
         end
 
@@ -256,11 +271,13 @@ GameScene = {
                 waitingCall = true;
                 localRating = localRating - 2;
                 rating = rating + localRating;
+                love.filesystem.write("save", tostring(rating));
             elseif consequence=="hangup-p" then
                 sfx.hangup:play();
                 waitingCall = true;
                 localRating = localRating + 2;
                 rating = rating + localRating;
+                love.filesystem.write("save", tostring(rating));
             else
                 sfx.pling:play();
             end

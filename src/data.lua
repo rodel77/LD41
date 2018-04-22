@@ -110,12 +110,131 @@ problems[4] = {
     }
 }
 
+problems[5] = {
+    phrases = {"People is asking why my beard is red but my hair is brown"},
+    music = "mistery",
+    options = {
+        "Say that you are a strange orc",
+        "Say that you tint it every day",
+        "*hang up*"
+    },
+    consequences = {
+        goodIdea,
+        goodIdea,
+        "hangup"
+    }
+}
+
+problems[6] = {
+    phrases = {"How much is (32 * 4 / 2) * 23?"},
+    music = "battle",
+    options = {
+        "2345",
+        "9204",
+        "1472",
+        "Same as Potato",
+        "*hang up*"
+    },
+    consequences = {
+        badIdea,
+        badIdea,
+        goodIdea,
+        13,
+        "hangup"
+    }
+}
+
+problems[7] = {
+    phrases = {"I am very small... just 4'10 and other orcs tell me that i am a dwarf"},
+    music = "sad",
+    options = {
+        "Ignore them",
+        "Buy tall shoes",
+        "Buy an axe and be a dwaft",
+        "*hang up*"
+    },
+    consequences = {
+        goodIdea,
+        goodIdea,
+        goodIdea,
+        "hangup"
+    }
+}
+
+problems[8] = {
+    phrases = {"I am in love with {random1}, my battle partner, i need some good phrases to flirt"},
+    music = "fast",
+    options = {
+        "\"You want to kill humans the rest of your life with me?\"",
+        "\"Lets be green together\"",
+        "\"I want those fangs to be mine\"",
+        "*hang up*"
+    },
+    consequences = {
+        goodIdea,
+        goodIdea,
+        goodIdea,
+        "hangup"
+    }
+}
+
+problems[9] = {
+    phrases = {"My friends laugh at me because i am not green as they..."},
+    music = "sad",
+    options = {
+        "Say \"The best orcs are not green\"",
+        "Tint your body",
+        "Murder your friends",
+        "*hang up*"
+    },
+    consequences = {
+        goodIdea,
+        goodIdea,
+        badIdea,
+        "hangup"
+    }
+}
+
+problems[10] = {
+    phrases = {"Who would win, Dumbledore, Gandalf or {random1}"},
+    music = "battle",
+    options = {
+        "Dumbledore",
+        "Gandalf",
+        "{random1}",
+        "Who is {random1}?",
+        "hangup"
+    },
+    consequences = {
+        goodIdea,
+        goodIdea,
+        goodIdea,
+        14,
+        "hangup"
+    }
+}
+
+problems[11] = {
+    phrases = {"Hey, i am {random1} i just want to talk with somebody"},
+    music = "fast",
+    options = {
+        "Sure!",
+        "Sorry i don't have time to talk, only solve problems",
+        "*hang up*"
+    },
+    consequences = {
+        16,
+        "hangup",
+        "hangup"
+    }
+}
+
 normalDialogs = {};
 
 -- 1 and 2 are the same, just checking (1 = Good, 2 = Bad) checked in the game.lua
 
 normalDialogs[1] = {
-    phrases = {"Oh, thanks i will try it!"},
+    phrases = {"Ok, thanks!"},
     music = "fast",
     options = {
         "You have another question {orc}?",
@@ -252,7 +371,7 @@ normalDialogs[10] = {
     },
     consequences = {
         11,
-        "hangup",
+        12,
         12
     }
 }
@@ -280,5 +399,180 @@ normalDialogs[12] = {
     consequences = {
         "hangup",
         10
+    }
+}
+
+normalDialogs[13] = {
+    phrases = {"And what is potato?"},
+    music = "battle",
+    options = {
+        "8302",
+        "1290",
+        "1472",
+        "*hang up*"
+    },
+    consequences = {
+        goodIdea,
+        badIdea,
+        badIdea,
+        "hangup"
+    }
+}
+
+normalDialogs[14] = {
+    phrases = {"Oh, {random1} is the king of Khar Drozgog and my best friend, so Dumbledore, Gandalf or {random1}"},
+    music = "battle",
+    options = {
+        "Dumbledore",
+        "Gandalf",
+        "{random1}",
+        "What is Khar Drozgog?",
+        "*hang up*"
+    },
+    consequences = {
+        goodIdea,
+        goodIdea,
+        goodIdea,
+        15,
+        "hangup"
+    }
+}
+
+normalDialogs[15] = {
+    phrases = {"You really need to know it? You are not playing a RPG game... Khar Drozgog is the biggest city in in Dugrol, sooo can you answer, Dumbledore, Gandalf or {random1}"},
+    music = "battle",
+    options = {
+        "Dumbledore",
+        "Gandalf",
+        "{random1}",
+        "What is Dugrol?",
+        "*hang up*"
+    },
+    consequences = {
+        goodIdea,
+        goodIdea,
+        goodIdea,
+        "hangup",
+        "hangup"
+    }
+}
+
+normalDialogs[16] = {
+    phrases = {"How is your day going?"},
+    music = "fast",
+    options = {
+        "Good and yours?",
+        "Meh and yours?",
+        "*hang up*"
+    },
+    consequences = {
+        17,
+        18,
+        "hangup"
+    }
+}
+
+normalDialogs[17] = {
+    phrases = {"Mine's good too, thanks!"},
+    music = "fast",
+    options = {
+        "Lets talk!",
+        "*hang up*"
+    },
+    consequences = {
+        20,
+        "hangup"
+    }
+}
+
+normalDialogs[18] = {
+    phrases = {"Its a pity that you only can select predefined phrases, but i can give you a hug, you want?"},
+    music = "sad",
+    options = {
+        "Yes",
+        "No",
+        "*hang up*"
+    },
+    consequences = {
+        19,
+        19,
+        "hangup"
+    }
+}
+
+normalDialogs[19] = {
+    phrases = {"I hope you get better"},
+    music = "sad",
+    options = {
+        "Lets, talk!",
+        "*hang up*"
+    },
+    consequences = {
+        20,
+        "hangup"
+    }
+}
+
+normalDialogs[20] = {
+    phrases = {"What is your favorite movie?"},
+    music = "fast",
+    options = {
+        "Orctanic",
+        "The Orcining",
+        "Orcman",
+        "Orcs vs Elfs",
+        "The hang up one (*hang up*)"
+    },
+    consequences = {
+        21,
+        21,
+        21,
+        21,
+        "hangup"
+    }
+}
+
+normalDialogs[21] = {
+    phrases = {"Ohh mine's too, and what is your favorite song of all time?"},
+    music = "fast",
+    options = {
+        "Stressed Orc",
+        "Orc Style",
+        "Orctown Funk",
+        "I am out of orc jokes...",
+        "*hang up*"
+    },
+    consequences = {
+        22,
+        22,
+        22,
+        22,
+        "hangup"
+    }
+}
+
+normalDialogs[22] = {
+    phrases = {"OH MY ORC, MINE'S TOO, do you want to date me?"},
+    music = "fast",
+    options = {
+        "Yes",
+        "No",
+        "*hang up*"
+    },
+    consequences = {
+        9,
+        23,
+        "hangup"
+    }
+}
+
+normalDialogs[23] = {
+    phrases = {"Ok, sorry"},
+    music = "fast",
+    options = {
+        "*hang up*"
+    },
+    consequences = {
+        "hangup-p"
     }
 }

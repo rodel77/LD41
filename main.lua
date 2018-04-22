@@ -32,6 +32,7 @@ function love.load()
     
     sfx = {
         pling = love.audio.newSource("assets/sound/pling.wav", "static"),
+        pip = love.audio.newSource("assets/sound/pip.ogg", "static"),
         phone = love.audio.newSource("assets/sound/phone.ogg", "static"),
         hangup = love.audio.newSource("assets/sound/hangup.wav", "static"),
         menuTheme = lovebpm.newTrack(), -- Orcs Also Have Problems
@@ -65,6 +66,14 @@ function love.load()
     sfx.sadTheme:load("assets/sound/sad.ogg");
     sfx.sadTheme:setBPM(60);
     sfx.sadTheme:setLooping(true);
+
+    if love.filesystem.getInfo("save")==nil then
+        love.filesystem.write("save", "0");
+    end
+
+    local content, size = love.filesystem.read("save");
+    rating = tonumber(content);
+
 
     -- newRandomCall()
 
