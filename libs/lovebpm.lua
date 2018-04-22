@@ -242,13 +242,13 @@ end
 
 function Track:update()
   if not self.source then return self end
-
+  
   -- Get delta time: getTime() is used for time-keeping as the value returned by
   -- :tell() is updated at a potentially lower rate than the framerate
   local t = love.timer.getTime()
   local dt = self.lastUpdateTime and (t - self.lastUpdateTime) or 0
   self.lastUpdateTime = t
-
+  
   -- Set new time
   local time
   if self.source:isPlaying() then

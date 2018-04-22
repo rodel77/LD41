@@ -6,12 +6,15 @@ local bufferText = "";
 local time = 0;
 local scale = 0;
 local options = {};
+local consequences = {};
 local index = 1;
 local stand = false;
 local standTime = 0;
 local song = nil;
 local costumer = "";
 local randomOrc1 = "";
+local waitingCall = true;
+local consequence = "";
 
 function newRandomCall()
     costumer = randomOrc();
@@ -23,9 +26,12 @@ function newRandomCall()
     currentText = phrase;
     bufferText = "";
     options = {};
+    consequences = {};
+    waitingCall = false;
 
     for i,option in ipairs(dialog.options) do
         options[i] = string.gsub(option, "{orc}", costumer);
+        consequences[i] = dialog.consequences[i];
     end
 
     currentScene = GameScene;
@@ -40,18 +46,49 @@ function newProblem()
     currentText = phrase;
     bufferText = "";
     options = {};
+    consequences = {};
 
     for i,option in ipairs(problem.options) do
         options[i] = string.gsub(option, "{random1}", randomOrc1);
+        consequences[i] = problem.consequences[i];
     end
 
-    if problem.music=="battle" then
-        song = sfx.battleTheme;
-    end
+    parseSong(problem.music)
 
     song.listeners["beat"] = {};
     index = 1;
     GameScene:playSong();
+end
+
+function simpleDialog(number)
+    local dialog = normalDialogs[number];
+    local phrase = dialog.phrases[math.random(#dialog.phrases)];
+    phrase = string.gsub(phrase, "{orc}", costumer);
+    phrase = string.gsub(phrase, "{random1}", randomOrc1);
+    currentText = phrase;
+    bufferText = "";
+    options = {};
+    consequences = {};
+
+    for i,option in ipairs(dialog.options) do
+        options[i] = string.gsub(option, "{random1}", randomOrc1);
+        options[i] = string.gsub(options[i], "{orc}", costumer);
+        consequences[i] = dialog.consequences[i];
+    end
+
+    parseSong(dialog.music)
+
+    song.listeners["beat"] = {};
+    index = 1;
+    GameScene:playSong();
+end
+
+function parseSong(name)
+    if name=="battle" then
+        song = sfx.battleTheme;
+    elseif name=="fast" then
+        song = sfx.fastTheme;
+    end
 end
 
 local textWrapping = 300;
@@ -60,11 +97,14 @@ GameScene = {
     load = function(this)
     end,
     playSong = function(this)
-        
         song.listeners["beat"] = {this.beat};
         song:play();
     end,
     draw = function()
+        if waitingCall then
+            return;
+        end
+
         love.graphics.setFont(fonts.slapface);
         --fonts.slapface:getWidth(bufferText)/2, fonts.slapface:getHeight()/2
         -- local tw = fonts.slapface:getWidth(bufferText);
@@ -94,6 +134,19 @@ GameScene = {
         end
     end,
     update = function(this, dt)
+        if waitingCall then
+            standTime = standTime + dt;
+
+            if standTime > 2 then
+                standTime = 0;
+                waitingCall = false;
+                stand = false;
+                currentScene = MenuScene;
+                sfx.menuTheme:play();
+            end
+            return;
+        end
+
         time = time + dt;
         if stand then
             standTime = standTime + dt;
@@ -114,18 +167,34 @@ GameScene = {
             scale = scale - 0.1;
         end
 
-        song:update();
+        if not stand then
+            song:update();
+        end
     end,
     goNext = function(this)
         stand = false;
         standTime = 0;
-        newProblem();
+
+        if type(consequence) == "number" then
+            simpleDialog(consequence);
+        elseif consequence=="problem" then
+            newProblem();
+        end
     end,
     keypressed = function(key)
-        if key=="return" then
+        if key=="return" and not stand then
             stand = true;
-            sfx.pling:play();
-            sfx.startTheme:stop();
+
+            consequence = consequences[index];
+
+            if consequence=="hangup" then
+                sfx.hangup:play();
+                waitingCall = true;
+            else
+                sfx.pling:play();
+            end
+
+            song:stop();
         end
     end
 };

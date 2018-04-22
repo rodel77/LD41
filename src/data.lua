@@ -28,8 +28,23 @@ problems[1] = {
         "*hang up*"
     },
     consequences = {
-        "thanks",
-        "thanks",
+        1,
+        1,
+        "hangup"
+    }
+}
+
+normalDialogs = {};
+
+normalDialogs[1] = {
+    phrases = {"Oh, thanks i will try it!"},
+    music = "fast",
+    options = {
+        "You have another question {orc}?",
+        "*hang up*"
+    },
+    consequences = {
+        "problem?",
         "hangup"
     }
 }

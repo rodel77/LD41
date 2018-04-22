@@ -28,17 +28,29 @@ function love.load()
     
     sfx = {
         pling = love.audio.newSource("assets/sound/pling.wav", "static"),
+        phone = love.audio.newSource("assets/sound/phone.ogg", "static"),
+        hangup = love.audio.newSource("assets/sound/hangup.wav", "static"),
+        menuTheme = lovebpm.newTrack(),
         startTheme = lovebpm.newTrack(),
-        battleTheme = lovebpm.newTrack()
+        battleTheme = lovebpm.newTrack(),
+        fastTheme = lovebpm.newTrack(),
     }
+
+    sfx.menuTheme:load("assets/sound/menu.ogg");
+    sfx.menuTheme:setBPM(60);
+    sfx.menuTheme:setLooping(true);
 
     sfx.startTheme:load("assets/sound/theme1.ogg");
     sfx.startTheme:setBPM(120);
     sfx.startTheme:setLooping(true);
 
-    sfx.battleTheme:load("assets/sound/mistery.ogg");
-    sfx.battleTheme:setBPM(100);
+    sfx.battleTheme:load("assets/sound/battle.ogg");
+    sfx.battleTheme:setBPM(65);
     sfx.battleTheme:setLooping(true);
+
+    sfx.fastTheme:load("assets/sound/fast.ogg");
+    sfx.fastTheme:setBPM(115);
+    sfx.fastTheme:setLooping(true);
 
     -- newRandomCall()
 
