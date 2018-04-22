@@ -578,19 +578,8 @@ normalDialogs[22] = {
     },
     consequences = {
         9,
-        23,
+        30,
         "hangup"
-    }
-}
-
-normalDialogs[23] = {
-    phrases = {"Ok, sorry"},
-    music = "fast",
-    options = {
-        "*hang up*"
-    },
-    consequences = {
-        "hangup-p"
     }
 }
 
@@ -675,6 +664,17 @@ normalDialogs[28] = {
 normalDialogs[29] = {
     phrases = {"Little Differences..."},
     music = "mistery",
+    options = {
+        "*hang up*"
+    },
+    consequences = {
+        "hangup-p"
+    }
+}
+
+normalDialogs[30] = {
+    phrases = {"Ok, sorry"},
+    music = "fast",
     options = {
         "*hang up*"
     },
