@@ -78,7 +78,7 @@ MenuScene = {
         if index==1 then love.graphics.setColor(unpack(yellow)) else love.graphics.setColor(unpack(white)) end
         love.graphics.print("Answer the phone", 1280/2, menuTweenData.playY, 0, 4+scale, 4+scale, fonts.oeuf:getWidth("Answer the phone")/2, fonts.oeuf:getHeight()/2);
         if index==2 then love.graphics.setColor(unpack(yellow)) else love.graphics.setColor(unpack(white)) end
-        love.graphics.print("Quit", 1280/2, menuTweenData.quitY, 0, 4+scale, 4+scale, fonts.oeuf:getWidth("Play")/2, fonts.oeuf:getHeight()/2);
+        love.graphics.print("*hang up*", 1280/2, menuTweenData.quitY, 0, 4+scale, 4+scale, fonts.oeuf:getWidth("*hang up*")/2, fonts.oeuf:getHeight()/2);
         love.graphics.setColor(unpack(white));
         
         love.graphics.setFont(fonts.slapface);

@@ -229,6 +229,23 @@ problems[11] = {
     }
 }
 
+problems[12] = {
+    phrases = {"How is called the Quarter Pounder with Cheese in Paris?"},
+    music = "mistery",
+    options = {
+        "Quarter Pouder with Cheese?",
+        "Royale with Cheese",
+        "They don't call it a Quarter Pounder with Cheese?",
+        "*hang up*"
+    },
+    consequences = {
+        badIdea,
+        goodIdea,
+        24,
+        "hangup"
+    }
+}
+
 normalDialogs = {};
 
 -- 1 and 2 are the same, just checking (1 = Good, 2 = Bad) checked in the game.lua
@@ -569,6 +586,95 @@ normalDialogs[22] = {
 normalDialogs[23] = {
     phrases = {"Ok, sorry"},
     music = "fast",
+    options = {
+        "*hang up*"
+    },
+    consequences = {
+        "hangup-p"
+    }
+}
+
+normalDialogs[23] = {
+    phrases = {"No, man, they got the metric system there, they wouldn't know what a Quarter Pounder is"},
+    music = "mistery",
+    options = {
+        "What'd they call it?",
+        "*hang up*"
+    },
+    consequences = {
+        24,
+        "hangup"
+    }
+}
+
+normalDialogs[24] = {
+    phrases = {"They call it Royale with Cheese"},
+    music = "mistery",
+    options = {
+        "Royale with Cheese, What'd they call a Big Mac?",
+        "*hang up*"
+    },
+    consequences = {
+        25,
+        "hangup"
+    }
+}
+
+normalDialogs[25] = {
+    phrases = {"Big Mac's a Big Mac, but they call it Le Big Mac"},
+    music = "mistery",
+    options = {
+        "Le Big Mac, What do they call a Whopper?",
+        "*hang up*"
+    },
+    consequences = {
+        26,
+        "hangup"
+    }
+}
+
+normalDialogs[26] = {
+    phrases = {"I dunno, I didn't go into a Orcker King, You know what they put on french fries in Holland instead of keptchup?"},
+    music = "mistery",
+    options = {
+        "What?",
+        "*hang up*"
+    },
+    consequences = {
+        27,
+        "hangup"
+    }
+}
+
+normalDialogs[27] = {
+    phrases = {"Mayonnaise"},
+    music = "mistery",
+    options = {
+        "Orcdam!",
+        "*hang up*"
+    },
+    consequences = {
+        28,
+        "hangup"
+    }
+}
+
+normalDialogs[28] = {
+    phrases = {"I seen 'em do it man. They drown 'em in this."},
+    music = "mistery",
+    options = {
+        "Uuccch!",
+        "*hang up*"
+    },
+    consequences = {
+        29,
+        "hangup"
+    }
+}
+
+normalDialogs[29] = {
+    phrases = {"Little Differences..."},
+    music = "mistery",
     options = {
         "*hang up*"
     },
