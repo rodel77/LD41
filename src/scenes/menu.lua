@@ -52,22 +52,21 @@ MenuScene = {
     draw = function(this)
         love.graphics.setColor(unpack(white));
         love.graphics.setFont(fonts.bubble);
-        -- love.graphics.print("Discorc", 1280/2, menuTweenData.titleY, 0, 4+scale, 4+scale, fonts.bubble:getWidth("Discorc")/2, fonts.bubble:getHeight()/2);
 
-
-        if step then love.graphics.setColor(unpack(yellow)) else love.graphics.setColor(unpack(white)) end
+        if step then love.graphics.setColor(unpack(white)) else love.graphics.setColor(unpack(yellow)) end
         love.graphics.print("D", 1280/2-(logoWidth/2)*(4+scale), menuTweenData.titleY, 0, 4+scale, 4+scale, 0, fonts.bubble:getHeight()/2);
         love.graphics.print("i", 1280/2-(logoWidth/2)*(4+scale)+Dsize*(scale+4), menuTweenData.titleY, 0, 4+scale, 4+scale, 0, fonts.bubble:getHeight()/2);
         love.graphics.print("s", 1280/2-(logoWidth/2)*(4+scale)+(Dsize+isize)*(scale+4), menuTweenData.titleY, 0, 4+scale, 4+scale, 0, fonts.bubble:getHeight()/2);
         love.graphics.print("c", 1280/2-(logoWidth/2)*(4+scale)+(Dsize+isize+ssize)*(scale+4), menuTweenData.titleY, 0, 4+scale, 4+scale, 0, fonts.bubble:getHeight()/2);
         love.graphics.setColor(unpack(yellow))
         love.graphics.print("o", 1280/2-(logoWidth/2)*(4+scale)+(Dsize+isize+ssize+csize)*(scale+4), menuTweenData.titleY, 0, 4+scale, 4+scale, 0, fonts.bubble:getHeight()/2);
-        if step then love.graphics.setColor(unpack(white)) else love.graphics.setColor(unpack(yellow)) end
+        if step then love.graphics.setColor(unpack(yellow)) else love.graphics.setColor(unpack(white)) end
         love.graphics.print("r", 1280/2-(logoWidth/2)*(4+scale)+(Dsize+isize+ssize+csize+osize)*(scale+4), menuTweenData.titleY, 0, 4+scale, 4+scale, 0, fonts.bubble:getHeight()/2);
         love.graphics.print("c", 1280/2-(logoWidth/2)*(4+scale)+(Dsize+isize+ssize+csize+osize+rsize)*(scale+4), menuTweenData.titleY, 0, 4+scale, 4+scale, 0, fonts.bubble:getHeight()/2);
 
         love.graphics.setColor(unpack(white));
         love.graphics.setFont(fonts.oeuf)
+        love.graphics.print("Ratings: "..rating, 0, 0, 0, 2, 2);
         love.graphics.print("Created by: @therodel77", 0, menuTweenData.creditY-((scale/2)*10), 0, 2+scale/2, 2+scale/2);
         if index==1 then love.graphics.setColor(unpack(yellow)) else love.graphics.setColor(unpack(white)) end
         love.graphics.print("Play", 1280/2, menuTweenData.playY, 0, 4+scale, 4+scale, fonts.oeuf:getWidth("Play")/2, fonts.oeuf:getHeight()/2);
@@ -77,6 +76,7 @@ MenuScene = {
         
         love.graphics.setFont(fonts.slapface);
         love.graphics.printf(welcome, 1280/2-800/2, menuTweenData.welcomeY, 400, "center", 0, 2, 2)
+
     end,
     update = function(this, dt)
         menuTween:update(dt);

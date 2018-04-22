@@ -15,12 +15,16 @@ local costumer = "";
 local randomOrc1 = "";
 local waitingCall = true;
 local consequence = "";
+local localRating = 0;
+local problemsSolved = {};
 
 function newRandomCall()
+    problemsSolved = {};
     costumer = randomOrc();
     randomOrc1 = randomOrc();
     local dialog = dialogs[math.random(#dialogs)];
     local phrase = dialog.phrases[math.random(#dialog.phrases)];
+    localRating = 0;
     song = sfx.startTheme;
     phrase = string.gsub(phrase, "{orc}", costumer);
     currentText = phrase;
@@ -38,9 +42,44 @@ function newRandomCall()
     GameScene:playSong();
 end
 
+function randProblem()
+    print("Finding problems, solved", #problemsSolved, "not", #problems);
+    if #problemsSolved==#problems then
+        print("All problem solved...");
+        return nil;
+    end
+
+    local valid = true;
+    local id = math.random(#problems);
+    local problem = problems[id];
+
+    for i,solved in ipairs(problemsSolved) do
+        print("Iterating", i, id);
+        if solved==id then
+            valid = false;
+            print("Finding a repeated problem... go again!")
+            break;
+        end
+    end
+
+    if not valid then
+        return randProblem();
+    else
+        table.insert(problemsSolved, id);
+        print("Problem", id)
+        return problem;
+    end
+end
+
 function newProblem()
-    local problem = problems[math.random(#problems)];
+    local problem = randProblem();
+
+    if problem==nil then
+        return nil;
+    end
+
     local phrase = problem.phrases[math.random(#problem.phrases)];
+    randomOrc1 = randomOrc();
     phrase = string.gsub(phrase, "{orc}", costumer);
     phrase = string.gsub(phrase, "{random1}", randomOrc1);
     currentText = phrase;
@@ -58,6 +97,8 @@ function newProblem()
     song.listeners["beat"] = {};
     index = 1;
     GameScene:playSong();
+
+    return true;
 end
 
 function simpleDialog(number)
@@ -88,6 +129,10 @@ function parseSong(name)
         song = sfx.battleTheme;
     elseif name=="fast" then
         song = sfx.fastTheme;
+    elseif name=="mistery" then
+        song = sfx.misteryTheme;
+    elseif name=="sad" then
+        song = sfx.sadTheme;
     end
 end
 
@@ -114,6 +159,7 @@ GameScene = {
 
         love.graphics.printf(bufferText, 1280/2-textWrapping*(3+scale)/2, 200-(fonts.slapface:getHeight()*#lines), textWrapping, "center", 0, 3+scale, 3+scale);
         love.graphics.setFont(fonts.oeuf);
+        love.graphics.print("Ratings: "..rating, 0, 0, 0, 2, 2);
 
         for i,option in ipairs(options) do
             if i==index then
@@ -151,7 +197,7 @@ GameScene = {
         if stand then
             standTime = standTime + dt;
 
-            if standTime > 2 then
+            if standTime > 1 then
                 this:goNext();
             end
         end
@@ -177,8 +223,26 @@ GameScene = {
 
         if type(consequence) == "number" then
             simpleDialog(consequence);
+
+            print("Redirecting to "..consequence)
+
+            if consequence==1 then
+                -- Good rating
+                localRating = localRating + 1;
+            elseif consequence==2 then
+                -- Bad rating
+                localRating = localRating - 1;
+            end
         elseif consequence=="problem" then
             newProblem();
+        elseif consequence=="problem?" then
+            if math.random(2)==1 then
+                simpleDialog(3);
+            else
+                if newProblem()==nil then
+                    simpleDialog(3);
+                end
+            end
         end
     end,
     keypressed = function(key)
@@ -190,6 +254,13 @@ GameScene = {
             if consequence=="hangup" then
                 sfx.hangup:play();
                 waitingCall = true;
+                localRating = localRating - 2;
+                rating = rating + localRating;
+            elseif consequence=="hangup-p" then
+                sfx.hangup:play();
+                waitingCall = true;
+                localRating = localRating + 2;
+                rating = rating + localRating;
             else
                 sfx.pling:play();
             end

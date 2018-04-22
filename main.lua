@@ -4,6 +4,7 @@ math.randomseed(love.timer.getTime());
 inspect = require "libs/inspect";
 lovebpm = require "libs/lovebpm";
 tween = require "libs/tween";
+CScreen = require "libs/cscreen";
 
 require "src/data";
 require "src/utils";
@@ -11,7 +12,10 @@ require "src/scenes/scenes";
 
 currentScene = SplashScene;
 
+rating = 0;
+
 function love.load()
+    CScreen.init(1280, 720, true);
     love.graphics.setDefaultFilter("nearest", "nearest");
 
     gfx = {
@@ -30,10 +34,12 @@ function love.load()
         pling = love.audio.newSource("assets/sound/pling.wav", "static"),
         phone = love.audio.newSource("assets/sound/phone.ogg", "static"),
         hangup = love.audio.newSource("assets/sound/hangup.wav", "static"),
-        menuTheme = lovebpm.newTrack(),
-        startTheme = lovebpm.newTrack(),
-        battleTheme = lovebpm.newTrack(),
-        fastTheme = lovebpm.newTrack(),
+        menuTheme = lovebpm.newTrack(), -- Orcs Also Have Problems
+        startTheme = lovebpm.newTrack(), -- How I Can Help You?
+        battleTheme = lovebpm.newTrack(), -- Orc Hobby
+        fastTheme = lovebpm.newTrack(), -- A Happy Orc Is Worth A Thousand Humans
+        misteryTheme = lovebpm.newTrack(), -- What You Think About This Mr.Sherlorc?
+        sadTheme = lovebpm.newTrack(), -- Orc Depression
     }
 
     sfx.menuTheme:load("assets/sound/menu.ogg");
@@ -52,6 +58,14 @@ function love.load()
     sfx.fastTheme:setBPM(115);
     sfx.fastTheme:setLooping(true);
 
+    sfx.misteryTheme:load("assets/sound/mistery.ogg");
+    sfx.misteryTheme:setBPM(100);
+    sfx.misteryTheme:setLooping(true);
+
+    sfx.sadTheme:load("assets/sound/sad.ogg");
+    sfx.sadTheme:setBPM(60);
+    sfx.sadTheme:setLooping(true);
+
     -- newRandomCall()
 
     -- currentScene:startCall();
@@ -62,9 +76,11 @@ function loadImage(path)
 end
 
 function love.draw()
+    CScreen.apply();
     if currentScene then
         currentScene:draw();
     end
+    CScreen.cease();
 end
 
 function love.update(dt)
@@ -73,12 +89,28 @@ function love.update(dt)
     end
 end
 
+pressedKeys = {};
+
 function love.keypressed(key)
-    if key=="escape" then
+    pressedKeys[key] = true;
+
+    if pressedKeys["return"] and pressedKeys["lalt"] then
+        love.window.setFullscreen(not love.window.getFullscreen());
+    elseif key=="escape" then
         love.event.quit();
+    elseif key=="f12" then
+        love.graphics.captureScreenshot(os.time()..".png");
     else
         if currentScene then
             currentScene.keypressed(key);
         end
     end
+end
+
+function love.keyreleased(key)
+    pressedKeys[key] = nil;
+end
+
+function love.resize(width, height)
+	CScreen.update(width, height)
 end
